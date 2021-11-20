@@ -90,7 +90,7 @@ if (foo) {
 ```
 
 
-## ** 🍕 Git Branch 전략**
+# 🍕 Git Branch 전략
 
 **코잇서버** 들의 WorkFlow : **Gitflow Workflow**
 
