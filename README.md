@@ -1,13 +1,13 @@
 ![img](<>)
 
-# :airplane: Project
+# 🍴 Project
 
-> 
+> COEAT
 
-- **SOPT 28th APPJAM, TAKE US**
-- 프로젝트 기간: 2021.06.26 ~ 2021.07.17
+- **SOPT 29th SOPTKATHON, COEAT**
+- 프로젝트 기간: 2021.11.20 ~
 
-# :paw_prints: Developers
+# 💙 Developers
 | 주어진사랑 | 강한희 |
 |:---:|:---------:|
 | <img src="https://user-images.githubusercontent.com/68781598/142728963-4ed3ae56-cfd0-4658-8c31-af268834654b.png" width="200px" />  | <img src="https://user-images.githubusercontent.com/68781598/124511973-4d254d80-de12-11eb-96b8-60741367d22a.png" width="200px" />  |
