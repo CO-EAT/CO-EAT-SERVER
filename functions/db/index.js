@@ -1,5 +1,6 @@
 module.exports = {
-    userDB: require('./user'),
     drinkDB: require('./drink'),
     saveDrinkDB: require('./saveDrink'),
+    mealDB: require('./meal'),
+    saveMealDB: require('./saveMeal'),
 };

@@ -1,8 +1,7 @@
-![img](<>)
-
 # 🍴 Project
 
-> COEAT
+> 오늘 뭐 먹을래? 아무거나는 이제 그만! Let's COEAT!
+> 모두가 행복한, 메뉴 취합 웹서비스
 
 - **SOPT 29th SOPTKATHON, COEAT**
 - 프로젝트 기간: 2021.11.20 ~
@@ -96,7 +95,6 @@ if (foo) {
 
   메인(main): 메인 브랜치
 
-  개발(develop): 기능들의 통합 브랜치
-    - feature 브랜치
+  - feature 브랜치
 
-- 기능 개발시 → feat/기능 으로 브랜치를 파서 관리합니다.
+- 기능 개발시 → feat/issue 으로 브랜치를 파서 관리합니다.
