@@ -12,7 +12,7 @@
 | <img src="https://user-images.githubusercontent.com/68781598/142728963-4ed3ae56-cfd0-4658-8c31-af268834654b.png" width="200px" />  | <img src="https://user-images.githubusercontent.com/68781598/124511973-4d254d80-de12-11eb-96b8-60741367d22a.png" width="200px" />  |
 | [ozzing](https://github.com/ozzing) | [kanghanhee](https://github.com/kanghanhee) |
 
-# ☕ API 명세서
+# ☕ 개발 담당 부분 & API 명세서
 [API 명세서](https://www.notion.so/Api-dd08b5416f9b49db94bea87aee060587)
 
 # 📂 폴더구조
@@ -25,6 +25,11 @@
   - lib
   - middlewares
 
+# 🧺 Dependencies
+
+# 🧊 ERD
+
+[테이블 정의](https://www.notion.so/Api-dd08b5416f9b49db94bea87aee060587)
 # 🍹 코드 컨벤션
 
 ### **🖋 네이밍**
