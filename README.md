@@ -16,9 +16,7 @@
 # ☕ API 명세서
 [API 명세서](https://www.notion.so/Api-dd08b5416f9b49db94bea87aee060587)
 
-# 🍹 코드 컨
-
-### 📂 폴더구조
+# 📂 폴더구조
 
 - src
   - api
@@ -27,6 +25,8 @@
   - db
   - lib
   - middlewares
+
+# 🍹 코드 컨벤션
 
 ### **🖋 네이밍**
 
