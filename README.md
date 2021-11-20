@@ -14,7 +14,7 @@
 | [ozzing](https://github.com/ozzing) | [kanghanhee](https://github.com/kanghanhee) |
 
 # 📧API 명세서
-![link](https://www.notion.so/Api-dd08b5416f9b49db94bea87aee060587)
+[API 명세서](https://www.notion.so/Api-dd08b5416f9b49db94bea87aee060587)
 
 # 📜 Coding Convention
 
