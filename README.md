@@ -30,6 +30,7 @@
 
 # 🧊 ERD
 ![image](https://user-images.githubusercontent.com/68781598/142742677-ff850451-4247-4fdb-833e-aaa231e63727.png)
+
 [테이블 정의 notion](https://www.notion.so/Table-0354525fc67b4b27b51852e68e34151b)
 # 🍹 코드 컨벤션
 
