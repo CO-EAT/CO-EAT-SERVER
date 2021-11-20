@@ -26,6 +26,7 @@
   - middlewares
 
 # 🧺 Dependencies
+![image](https://user-images.githubusercontent.com/68781598/142742088-a73ca666-74c9-481f-b05a-881593b23d9e.png)
 
 # 🧊 ERD
 
