@@ -1,6 +1,6 @@
 # 🍴 Project
 
-> 오늘 뭐먹을래? 아무거나는 그만! LET'S COEAT!
+> COEAT : 오늘 뭐먹을래? 아무거나는 그만! LET'S COEAT!
 
 - **SOPT 29th SOPTKATHON, COEAT**
 - 프로젝트 기간: 2021.11.20 ~
