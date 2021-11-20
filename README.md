@@ -1,6 +1,6 @@
 # 🍴 Project
 
-> COEAT : 오늘 뭐먹을래? 아무거나는 그만! LET'S COEAT!
+> 오늘 뭐 먹을래? 아무거나는 이제 그만! Let's COEAT! : 모두가 행복한, 메뉴 취합 웹서비스
 
 - **SOPT 29th SOPTKATHON, COEAT**
 - 프로젝트 기간: 2021.11.20 ~
