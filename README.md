@@ -104,8 +104,10 @@ if (foo) {
   - feature 브랜치
 
 > 기능 개발시 → feat/issue번호 으로 브랜치를 파서 관리합니다.
-> develop에 바로 merge하지 않습니다.
+```
+develop에 바로 merge하지 않습니다.
 pr을 develop로 해주세요.
 develop에서 완성이 되면 main으로 그때 그때 merge합니다.
 
 merge는 github에서 진행합니다.
+```
