@@ -1,8 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-router.get('/', (req, res) => {
-  res.status(200).send('그룹 API');
-});
+router.post('/', require('./groupPOST'));
 
 module.exports = router;
