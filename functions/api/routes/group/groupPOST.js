@@ -24,7 +24,7 @@ module.exports = async (req, res) => {
     const newUser = await userDB.addUser(client, hostName, newGroup[0].id);
     //console.log(newUser);
 
-    res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.ADD_ONE_POST_SUCCESS, [{ inviteCode: groupInviteCode }]));
+    res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.ADD_GROUP_SUCCESS, [{ inviteCode: groupInviteCode }]));
   } catch (error) {
     functions.logger.error(`[ERROR] [${req.method.toUpperCase()}] ${req.originalUrl}`, `[CONTENT] ${error}`);
     console.log(error);
