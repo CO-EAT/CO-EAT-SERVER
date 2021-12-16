@@ -11,6 +11,7 @@ module.exports = {
 
   //그룹
   ADD_GROUP_SUCCESS: '그룹 생성하기 성공',
+  READ_GROUP_SUCCESS: '그룹 정보 조회하기 성공',
 
   //메뉴
   READ_ALL_MENU_SUCCESS: '메뉴 조회하기 성공',
