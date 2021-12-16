@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-
-router.use('/drink', require("./drink"));
-router.use('/meal', require('./meal'));
+router.use('/user', require('./user'));
+router.use('/group', require('./group'));
+router.use('/menu', require('./menu'));
 
 module.exports = router;

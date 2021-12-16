@@ -65,4 +65,5 @@ node_modules/
 # dotenv environment variables file
 .env
 
-co-eat-server-firebase-adminsdk-5efhq-902664862d.json
+# Firebase-service-account
+co-eat-server-firebase-adminsdk-5efhq-77f035d468.json
