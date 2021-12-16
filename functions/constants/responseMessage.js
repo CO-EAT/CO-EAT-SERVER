@@ -5,4 +5,13 @@ module.exports = {
 
   // 서버 내 오류
   INTERNAL_SERVER_ERROR: '서버 내 오류',
+
+  // 유저
+  ADD_USER_SUCCESS: '유저 생성하기 성공',
+
+  //그룹
+  ADD_GROUP_SUCCESS: '그룹 생성하기 성공',
+
+  //메뉴
+  READ_ALL_MENU_SUCCESS: '메뉴 조회하기 성공',
 };
