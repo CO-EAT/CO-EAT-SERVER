@@ -15,7 +15,7 @@ module.exports = async (req, res) => {
 
     const group = await groupDB.findGroupByInviteCode(client, inviteCode);
 
-    res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.READ_ALL_MENU_SUCCESS, group));
+    res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.READ_GROUP_SUCCESS, group));
   } catch (error) {
     functions.logger.error(`[ERROR] [${req.method.toUpperCase()}] ${req.originalUrl}`, `[CONTENT] ${error}`);
     console.log(error);
