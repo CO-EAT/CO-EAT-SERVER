@@ -69,11 +69,10 @@ if (foo) {
 
 ### **:speech_balloon: 커밋 메시지 태그 모음**
 
-    커밋 규칙을 지키지 않으면 commitlint에서 자동으로 에러가 발생합니다.
-
 ```
 - feat    : 기능 (새로운 기능)
 - update  : 코드 (코드 수정, 추가, 보완)
+- fix     : 버그 수정
 - docs    : 문서 (문서 추가, 수정, 삭제)
 - chore   : 그 외 변경사항 (주석 추가,삭제 등)
 ```
@@ -100,8 +99,13 @@ if (foo) {
 
 **코잇서버** 들의 WorkFlow : **Gitflow Workflow**
 
-  메인(main): 메인 브랜치
-
+- 메인(main): 메인 브랜치
+- 개발(develop): 기능들의 통합 브랜치
   - feature 브랜치
 
-- 기능 개발시 → feat/issue 으로 브랜치를 파서 관리합니다.
+> 기능 개발시 → feat/issue번호 으로 브랜치를 파서 관리합니다.
+> develop에 바로 merge하지 않습니다.
+pr을 develop로 해주세요.
+develop에서 완성이 되면 main으로 그때 그때 merge합니다.
+
+merge는 github에서 진행합니다.
