@@ -1,6 +1,17 @@
 const _ = require('lodash');
 const convertSnakeToCamel = require('../lib/convertSnakeToCamel');
 
+const findGroupByInviteCode = async (client, inviteCode) => {
+  const { rows } = await client.query(
+    `
+      SELECT * FROM "group"
+      WHERE invite_code = $1
+      `,
+    [inviteCode],
+  );
+  return convertSnakeToCamel.keysToCamel(rows);
+};
+
 const addGroup = async (client, hostName, inviteCode) => {
   const { rows } = await client.query(
     `
