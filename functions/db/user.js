@@ -48,6 +48,47 @@ const getNoeatCountByMostCoeatId = async (client, groupId, coeatId) => {
   return convertSnakeToCamel.keysToCamel(rows);
 };
 
+const getFiveCoeatMenuIdByGroupId = async (client, groupId) => {
+  const { rows } = await client.query(
+    `
+    SELECT menu_id, COUNT(*) cnt
+    FROM like_menu
+    WHERE group_id = $1
+    GROUP BY menu_id
+    ORDER BY COUNT(*) DESC
+    LIMIT 5;    
+  `,
+    [groupId],
+  );
+  return convertSnakeToCamel.keysToCamel(rows);
+};
+
+const getLessNoeatIdWithinFiveMenu = async (client, groupId, menuId) => {
+  const { rows } = await client.query(
+    `
+    SELECT COUNT(*) cnt
+    FROM unlike_menu
+    WHERE group_id = $1
+    and menu_id = $2
+    GROUP BY menu_id;
+  `,
+    [groupId, menuId],
+  );
+  return convertSnakeToCamel.keysToCamel(rows);
+};
+
+const getLessNoeatDataByMenuId = async (client, menuId) => {
+  const { rows } = await client.query(
+    `
+    SELECT menu_name, menu_img
+    FROM "menu" m
+    WHERE id = $1
+  `,
+    [menuId],
+  );
+  return convertSnakeToCamel.keysToCamel(rows);
+};
+
 const getUsersByGroupId = async (client, groupId) => {
   const { rows } = await client.query(
     `
@@ -100,4 +141,15 @@ const getPeopleCount = async (client, groupId) => {
   return convertSnakeToCamel.keysToCamel(rows);
 };
 
-module.exports = { addUser, getMostCoeatDataByGroupId, getNoeatCountByMostCoeatId, getCoeatList, getNoeatList, getPeopleCount, getUsersByGroupId };
+module.exports = {
+  addUser,
+  getMostCoeatDataByGroupId,
+  getNoeatCountByMostCoeatId,
+  getFiveCoeatMenuIdByGroupId,
+  getLessNoeatIdWithinFiveMenu,
+  getLessNoeatDataByMenuId,
+  getCoeatList,
+  getNoeatList,
+  getPeopleCount,
+  getUsersByGroupId,
+};

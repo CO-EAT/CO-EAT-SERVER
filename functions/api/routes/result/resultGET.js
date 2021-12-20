@@ -23,6 +23,22 @@ module.exports = async (req, res) => {
     const { menuId: mostCoeatId, menuName: mostCoeatMenuName, menuImg: mostCoeatMenuImg, menuCnt: mostCoeatCount } = (await userDB.getMostCoeatDataByGroupId(client, groupId))[0];
     const { noeatCount: mostNoeatCount } = (await userDB.getNoeatCountByMostCoeatId(client, groupId, mostCoeatId))[0];
 
+    const fiveCoeatMenuId = await userDB.getFiveCoeatMenuIdByGroupId(client, groupId);
+    var lessNoeatCount = 0xffff,
+      lessCoeatCount = 0,
+      lessNoeatMenuId = 0;
+    for (const menu of fiveCoeatMenuId) {
+      const menuId = menu.menuId;
+      const coeatCnt = menu.cnt;
+      const lessNoeat = (await userDB.getLessNoeatIdWithinFiveMenu(client, groupId, menuId))[0].cnt;
+      if (lessNoeatCount > lessNoeat) {
+        lessNoeatCount = lessNoeat;
+        lessNoeatMenuId = menuId;
+        lessCoeatCount = coeatCnt;
+      }
+    }
+    const { menuName: lessNoeatMenuName, menuImg: lessNoeatMenuImg } = (await userDB.getLessNoeatDataByMenuId(client, lessNoeatMenuId))[0];
+
     var resultList = [];
     const usersList = await userDB.getUsersByGroupId(client, groupId);
     for (const user of usersList) {
@@ -45,6 +61,10 @@ module.exports = async (req, res) => {
       mostCoeatMenuImg: mostCoeatMenuImg,
       mostCoeatCount: Number(mostCoeatCount),
       mostNoeatCount: Number(mostNoeatCount),
+      lessNoeatMenuName: lessNoeatMenuName,
+      lessNoeatMenuImg: lessNoeatMenuImg,
+      lessCoeatCount: lessCoeatCount,
+      lessNoeatCount: lessNoeatCount,
       resultList: resultList,
       peopleCount: Number(peopleCount),
     };
