@@ -15,7 +15,7 @@ module.exports = {
 
   //메뉴
   READ_ALL_MENU_SUCCESS: '메뉴 조회하기 성공',
-  
+
   //결과
   READ_RESULT_SUCCESS: '결과 조회하기 성공',
   COMPLETE_RESULT_SUCCESS: '결과 조회 종료 성공',
