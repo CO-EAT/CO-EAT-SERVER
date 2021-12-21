@@ -29,10 +29,13 @@ module.exports = async (req, res) => {
       lessNoeatMenuId = 0;
     for (const menu of fiveCoeatMenuId) {
       const menuId = menu.menuId;
-      const coeatCnt = menu.cnt;
-      const lessNoeat = (await userDB.getLessNoeatIdWithinFiveMenu(client, groupId, menuId))[0].cnt;
-      if (lessNoeatCount > lessNoeat) {
-        lessNoeatCount = lessNoeat;
+      const coeatCnt = Number(menu.cnt);
+      const lessNoeat = (await userDB.getLessNoeatIdWithinFiveMenu(client, groupId, menuId))[0];
+      var lessNoeatCnt;
+      if (lessNoeat !== undefined) lessNoeatCnt = lessNoeat.cnt;
+      else lessNoeatCnt = 0;
+      if (lessNoeatCount > lessNoeatCnt) {
+        lessNoeatCount = lessNoeatCnt;
         lessNoeatMenuId = menuId;
         lessCoeatCount = coeatCnt;
       }
