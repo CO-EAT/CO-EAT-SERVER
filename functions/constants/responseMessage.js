@@ -8,13 +8,16 @@ module.exports = {
 
   // 유저
   ADD_USER_SUCCESS: '유저 생성하기 성공',
+  NOT_FOUND_USER: '해당하는 유저를 찾지 못했습니다.',
 
   //그룹
   ADD_GROUP_SUCCESS: '그룹 생성하기 성공',
   READ_GROUP_SUCCESS: '그룹 정보 조회하기 성공',
+  NOT_FOUND_GROUP: '해당하는 그룹을 찾지 못했습니다.',
 
   //메뉴
   READ_ALL_MENU_SUCCESS: '메뉴 조회하기 성공',
+  ADD_SELETED_MENU_SUCCESS: '메뉴 선택하기 성공',
 
   //결과
   READ_RESULT_SUCCESS: '결과 조회하기 성공',
