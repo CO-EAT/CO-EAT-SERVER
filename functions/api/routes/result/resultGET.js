@@ -8,9 +8,8 @@ const { UserBuilder } = require('firebase-functions/v1/auth');
 
 module.exports = async (req, res) => {
   const { inviteCode } = req.params;
-  const { nickname } = req.body;
 
-  if (!inviteCode || !nickname) return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+  if (!inviteCode) return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
 
   let client;
 
