@@ -11,6 +11,8 @@ module.exports = async (req, res) => {
 
   let client;
 
+  if (!hostName) return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+
   try {
     client = await db.connect(req);
     let inviteCode = generateCode(); // 무작위로 참여 코드 생성

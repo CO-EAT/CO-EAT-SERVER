@@ -15,6 +15,47 @@ const addUser = async (client, nickname, groupId) => {
   return convertSnakeToCamel.keysToCamel(rows);
 };
 
+const addLikeMenu = async (client, groupId, userId, likeMenu) => {
+  const { rows } = await client.query(
+    `
+    INSERT INTO "like_menu"
+    (group_id, user_id, menu_id)
+    VALUES
+    ($1,$2,$3)
+    RETURNING *
+    `,
+    [groupId, userId, likeMenu],
+  );
+  return convertSnakeToCamel.keysToCamel(rows);
+};
+
+const addUnlikeMenu = async (client, groupId, userId, unlikeMenu) => {
+  const { rows } = await client.query(
+    `
+    INSERT INTO "unlike_menu"
+    (group_id, user_id, menu_id)
+    VALUES
+    ($1,$2,$3)
+    RETURNING *
+    `,
+    [groupId, userId, unlikeMenu],
+  );
+  return convertSnakeToCamel.keysToCamel(rows);
+};
+
+const findUserByNickNameandGroupId = async (client, groupId, nickname) => {
+  const { rows } = await client.query(
+    `
+    SELECT *
+    FROM "user"
+    WHERE group_id = $1
+    AND nickname = $2
+    `,
+    [groupId, nickname],
+  );
+  return convertSnakeToCamel.keysToCamel(rows);
+};
+
 const getMostCoeatDataByGroupId = async (client, groupId) => {
   const { rows } = await client.query(
     `
@@ -143,6 +184,9 @@ const getPeopleCount = async (client, groupId) => {
 
 module.exports = {
   addUser,
+  addLikeMenu,
+  addUnlikeMenu,
+  findUserByNickNameandGroupId,
   getMostCoeatDataByGroupId,
   getNoeatCountByMostCoeatId,
   getFiveCoeatMenuIdByGroupId,

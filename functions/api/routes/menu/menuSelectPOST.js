@@ -7,21 +7,32 @@ const { groupDB, userDB } = require('../../../db');
 
 module.exports = async (req, res) => {
   const { inviteCode } = req.params;
-  const { nickname } = req.body;
+  const { nickname } = req.query;
+  const { likedMenu, unlikedMenu } = req.body;
 
   let client;
 
-  if (!inviteCode || !nickname) return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+  if (!inviteCode || !nickname || !likedMenu || !unlikedMenu) return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
 
   try {
     client = await db.connect(req);
 
     const findGroup = await groupDB.findGroupByInviteCode(client, inviteCode);
-    //console.log(findGroup);
     const groupId = findGroup[0].id;
-    const newUser = await userDB.addUser(client, nickname, groupId);
 
-    res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.ADD_USER_SUCCESS, newUser));
+    const findUser = await userDB.findUserByNickNameandGroupId(client, groupId, nickname);
+    const userId = findUser[0].id;
+
+    // 하나씩 저장
+    for (let i = 0; i < likedMenu.length; i++) {
+      await userDB.addLikeMenu(client, groupId, userId, likedMenu[i]);
+    }
+
+    for (let i = 0; i < unlikedMenu.length; i++) {
+      await userDB.addUnlikeMenu(client, groupId, userId, unlikedMenu[i]);
+    }
+
+    res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.ADD_SELETED_MENU_SUCCESS));
   } catch (error) {
     functions.logger.error(`[ERROR] [${req.method.toUpperCase()}] ${req.originalUrl}`, `[CONTENT] ${error}`);
     console.log(error);
