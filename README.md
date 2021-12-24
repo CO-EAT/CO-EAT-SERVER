@@ -26,7 +26,7 @@
   - middlewares
 
 # 🧺 Dependencies
-![image](https://user-images.githubusercontent.com/68781598/142742088-a73ca666-74c9-481f-b05a-881593b23d9e.png)
+![image](https://user-images.githubusercontent.com/68781598/147339258-282e1d89-6142-407a-9a2c-457bb29f2114.png)
 
 # 🧊 ERD & 테이블 
 ![image](https://user-images.githubusercontent.com/68781598/142742677-ff850451-4247-4fdb-833e-aaa231e63727.png)
