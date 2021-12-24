@@ -31,7 +31,6 @@
 # 🧊 ERD & 테이블 
 ![image](https://user-images.githubusercontent.com/68781598/147339395-24b9af4e-00ae-4139-aeed-4d769d0d462e.png)
 
-[테이블 정의 notion](https://www.notion.so/Table-0354525fc67b4b27b51852e68e34151b)
 # 🍹 코드 컨벤션
 
 ### **🖋 네이밍**
