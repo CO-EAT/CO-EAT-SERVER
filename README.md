@@ -13,7 +13,7 @@
 | [ozzing](https://github.com/ozzing) | [kanghanhee](https://github.com/kanghanhee) |
 
 # ☕ 개발 담당 부분 & API 명세서
-[API 명세서 notion](https://www.notion.so/bd097642598c4231baa92b52258a1944?v=5d5677c16bda454286d465c7ba2a2d8a)
+[API 명세서 notion](https://www.notion.so/2f0ee2e57fb34c109cffaf6f5ca0f56a)
 
 # 📂 폴더구조
 
