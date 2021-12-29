@@ -22,7 +22,7 @@ module.exports = async (req, res) => {
     const temp = await userDB.getNoeatCountByMostCoeatId(client, groupId, mostCoeatId);
     var mostNoeatCount = 0;
     if (temp[0]) {
-      mostNoeatCount = temp[0];
+      mostNoeatCount = temp[0].noeatCount;
     }
     const fiveCoeatMenuId = await userDB.getFiveCoeatMenuIdByGroupId(client, groupId);
     var lessNoeatCount = 0xffff,
