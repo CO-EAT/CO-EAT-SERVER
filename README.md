@@ -13,7 +13,7 @@
 | [ozzing](https://github.com/ozzing) | [kanghanhee](https://github.com/kanghanhee) |
 
 # ☕ 개발 담당 부분 & API 명세서
-[API 명세서 notion](https://www.notion.so/Api-dd08b5416f9b49db94bea87aee060587)
+[API 명세서 notion](https://www.notion.so/2f0ee2e57fb34c109cffaf6f5ca0f56a)
 
 # 📂 폴더구조
 
@@ -29,9 +29,8 @@
 ![image](https://user-images.githubusercontent.com/68781598/142742088-a73ca666-74c9-481f-b05a-881593b23d9e.png)
 
 # 🧊 ERD & 테이블 
-![image](https://user-images.githubusercontent.com/68781598/142742677-ff850451-4247-4fdb-833e-aaa231e63727.png)
+![image](https://user-images.githubusercontent.com/68781598/147339395-24b9af4e-00ae-4139-aeed-4d769d0d462e.png)
 
-[테이블 정의 notion](https://www.notion.so/Table-0354525fc67b4b27b51852e68e34151b)
 # 🍹 코드 컨벤션
 
 ### **🖋 네이밍**
@@ -69,11 +68,10 @@ if (foo) {
 
 ### **:speech_balloon: 커밋 메시지 태그 모음**
 
-    커밋 규칙을 지키지 않으면 commitlint에서 자동으로 에러가 발생합니다.
-
 ```
 - feat    : 기능 (새로운 기능)
 - update  : 코드 (코드 수정, 추가, 보완)
+- fix     : 버그 수정
 - docs    : 문서 (문서 추가, 수정, 삭제)
 - chore   : 그 외 변경사항 (주석 추가,삭제 등)
 ```
@@ -100,8 +98,15 @@ if (foo) {
 
 **코잇서버** 들의 WorkFlow : **Gitflow Workflow**
 
-  메인(main): 메인 브랜치
-
+- 메인(main): 메인 브랜치
+- 개발(develop): 기능들의 통합 브랜치
   - feature 브랜치
 
-- 기능 개발시 → feat/issue 으로 브랜치를 파서 관리합니다.
+> 기능 개발시 → feat/issue번호 으로 브랜치를 파서 관리합니다.
+```
+develop에 바로 merge하지 않습니다.
+pr을 develop로 해주세요.
+develop에서 완성이 되면 main으로 그때 그때 merge합니다.
+
+merge는 github에서 진행합니다.
+```
