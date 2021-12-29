@@ -4,7 +4,6 @@ const statusCode = require('../../../constants/statusCode');
 const responseMessage = require('../../../constants/responseMessage');
 const db = require('../../../db/db');
 const { groupDB, userDB } = require('../../../db');
-const { UserBuilder } = require('firebase-functions/v1/auth');
 
 module.exports = async (req, res) => {
   const { inviteCode } = req.params;
@@ -20,8 +19,11 @@ module.exports = async (req, res) => {
     const groupId = findGroup[0].id;
 
     const { menuId: mostCoeatId, menuName: mostCoeatMenuName, menuImg: mostCoeatMenuImg, menuCnt: mostCoeatCount } = (await userDB.getMostCoeatDataByGroupId(client, groupId))[0];
-    const { noeatCount: mostNoeatCount } = (await userDB.getNoeatCountByMostCoeatId(client, groupId, mostCoeatId))[0];
-
+    const temp = await userDB.getNoeatCountByMostCoeatId(client, groupId, mostCoeatId);
+    var mostNoeatCount = 0;
+    if (temp[0]) {
+      mostNoeatCount = temp[0];
+    }
     const fiveCoeatMenuId = await userDB.getFiveCoeatMenuIdByGroupId(client, groupId);
     var lessNoeatCount = 0xffff,
       lessCoeatCount = 0,
