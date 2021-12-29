@@ -20,7 +20,7 @@ module.exports = async (req, res) => {
     const groupId = findGroup[0].id;
 
     const { menuId: mostCoeatId, menuName: mostCoeatMenuName, menuImg: mostCoeatMenuImg, menuCnt: mostCoeatCount } = (await userDB.getMostCoeatDataByGroupId(client, groupId))[0];
-    const { noeatCount: mostNoeatCount } = await userDB.getNoeatCountByMostCoeatId(client, groupId, mostCoeatId);
+    const { noeatCount: mostNoeatCount } = (await userDB.getNoeatCountByMostCoeatId(client, groupId, mostCoeatId))[0];
 
     const fiveCoeatMenuId = await userDB.getFiveCoeatMenuIdByGroupId(client, groupId);
     var lessNoeatCount = 0xffff,
@@ -65,8 +65,8 @@ module.exports = async (req, res) => {
       mostNoeatCount: Number(mostNoeatCount),
       lessNoeatMenuName: lessNoeatMenuName,
       lessNoeatMenuImg: lessNoeatMenuImg,
-      lessCoeatCount: lessCoeatCount,
-      lessNoeatCount: lessNoeatCount,
+      lessCoeatCount: Number(lessCoeatCount),
+      lessNoeatCount: Number(lessNoeatCount),
       resultList: resultList,
       peopleCount: Number(peopleCount),
     };
