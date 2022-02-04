@@ -21,6 +21,7 @@ module.exports = {
 
   //결과
   READ_RESULT_SUCCESS: '결과 조회하기 성공',
+  READ_EMPTY_RESULT_SUCCESS: '결과 조회 성공, 투표 결과 없음',
   COMPLETE_RESULT_SUCCESS: '결과 조회 종료 성공',
   IS_NOT_HOST: '호스트가 아님',
 };
