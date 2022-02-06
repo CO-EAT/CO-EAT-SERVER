@@ -18,6 +18,8 @@ module.exports = async (req, res) => {
     const findGroup = await groupDB.findGroupByInviteCode(client, inviteCode);
     if (findGroup.length === 0) return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NOT_FOUND_GROUP));
     const groupId = findGroup[0].id;
+    const isFinished = (await groupDB.checkGroupFinished(client, groupId)).isDeleted;
+    if (isFinished) return res.status(statusCode.OK).send(util.fail(statusCode.OK, responseMessage.COEAT_COMPLETE));
 
     // Result List
     const usersList = await userDB.getUsersByGroupId(client, groupId);

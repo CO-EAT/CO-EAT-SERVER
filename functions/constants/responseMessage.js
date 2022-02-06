@@ -24,4 +24,5 @@ module.exports = {
   READ_EMPTY_RESULT_SUCCESS: '결과 조회 성공, 투표 결과 없음',
   COMPLETE_RESULT_SUCCESS: '결과 조회 종료 성공',
   IS_NOT_HOST: '호스트가 아님',
+  COEAT_COMPLETE: '종료된 링크입니다.',
 };
