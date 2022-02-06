@@ -12,6 +12,17 @@ const findGroupByInviteCode = async (client, inviteCode) => {
   return convertSnakeToCamel.keysToCamel(rows);
 };
 
+const checkGroupFinished = async (client, groupId) => {
+  const { rows } = await client.query(
+    `
+      SELECT is_deleted FROM "group"
+      WHERE id = $1
+      `,
+    [groupId],
+  );
+  return convertSnakeToCamel.keysToCamel(rows[0]);
+};
+
 const addGroup = async (client, hostName, inviteCode) => {
   const { rows } = await client.query(
     `
@@ -26,7 +37,7 @@ const addGroup = async (client, hostName, inviteCode) => {
   return convertSnakeToCamel.keysToCamel(rows);
 };
 
-const checkHost = async (client, groupId, nickname)=>{
+const checkHost = async (client, groupId, nickname) => {
   const { rows } = await client.query(
     `
     SELECT * from "group" g
@@ -37,7 +48,7 @@ const checkHost = async (client, groupId, nickname)=>{
   return convertSnakeToCamel.keysToCamel(rows[0]);
 };
 
-const completeGroup = async (client, groupId, nickname)=>{
+const completeGroup = async (client, groupId, nickname) => {
   const { rows } = await client.query(
     `
     UPDATE "group" g
@@ -50,4 +61,4 @@ const completeGroup = async (client, groupId, nickname)=>{
   return convertSnakeToCamel.keysToCamel(rows[0]);
 };
 
-module.exports = { findGroupByInviteCode, addGroup, checkHost, completeGroup };
+module.exports = { findGroupByInviteCode, checkGroupFinished, addGroup, checkHost, completeGroup };
