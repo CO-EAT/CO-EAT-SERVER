@@ -16,64 +16,75 @@ module.exports = async (req, res) => {
     client = await db.connect(req);
 
     const findGroup = await groupDB.findGroupByInviteCode(client, inviteCode);
+    if (findGroup.length === 0) return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NOT_FOUND_GROUP));
     const groupId = findGroup[0].id;
 
-    const { menuId: mostCoeatId, menuName: mostCoeatMenuName, menuImg: mostCoeatMenuImg, menuCnt: mostCoeatCount } = (await userDB.getMostCoeatDataByGroupId(client, groupId))[0];
-    const temp = await userDB.getNoeatCountByMostCoeatId(client, groupId, mostCoeatId);
-    var mostNoeatCount = 0;
-    if (temp[0]) {
-      mostNoeatCount = temp[0].noeatCount;
-    }
-    const fiveCoeatMenuId = await userDB.getFiveCoeatMenuIdByGroupId(client, groupId);
-    var lessNoeatCount = 0xffff,
-      lessCoeatCount = 0,
-      lessNoeatMenuId = 0;
-    for (const menu of fiveCoeatMenuId) {
-      const menuId = menu.menuId;
-      const coeatCnt = Number(menu.cnt);
-      const lessNoeat = (await userDB.getLessNoeatIdWithinFiveMenu(client, groupId, menuId))[0];
-      var lessNoeatCnt;
-      if (lessNoeat !== undefined) lessNoeatCnt = lessNoeat.cnt;
-      else lessNoeatCnt = 0;
-      if (lessNoeatCount > lessNoeatCnt) {
-        lessNoeatCount = lessNoeatCnt;
-        lessNoeatMenuId = menuId;
-        lessCoeatCount = coeatCnt;
-      }
-    }
-    const { menuName: lessNoeatMenuName, menuImg: lessNoeatMenuImg } = (await userDB.getLessNoeatDataByMenuId(client, lessNoeatMenuId))[0];
-
-    var resultList = [];
+    // Result List
     const usersList = await userDB.getUsersByGroupId(client, groupId);
-    for (const user of usersList) {
-      const { id, nickname } = user;
+    const userIdList = usersList.map((o) => o.id);
+    const coeatList = await userDB.getCoeatList(client, userIdList, groupId);
+    const noeatList = await userDB.getNoeatList(client, userIdList, groupId);
 
-      const coeatList = await userDB.getCoeatList(client, id);
-      const noeatList = await userDB.getNoeatList(client, id);
+    const resultList = usersList.map((item) => {
+      item.likedMenu = [];
+      item.unlikedMenu = [];
+      return item;
+    });
+    coeatList.map((o) => {
+      const item = resultList.find((e) => e.id === o.userId);
+      item.likedMenu.push(o.menuName);
+      return o;
+    });
+    noeatList.map((o) => {
+      const item = resultList.find((e) => e.id === o.userId);
+      item.unlikedMenu.push(o.menuName);
+      return o;
+    });
+    const { count: peopleCount } = await userDB.getPeopleCount(client, groupId);
 
-      resultList.push({
-        nickName: nickname,
-        likedMenu: coeatList.map((coeatMenu) => coeatMenu.menuName),
-        unlikedMenu: noeatList.map((noeatMenu) => noeatMenu.menuName),
+    try {
+      // Most Coeat
+      const { menuId: mostCoeatId, menuName: mostCoeatMenuName, menuImg: mostCoeatMenuImg, menuCnt: mostCoeatCount } = await userDB.getMostCoeatDataByGroupId(client, groupId);
+      const temp = await userDB.getNoeatCountByMostCoeatId(client, groupId, mostCoeatId);
+      let mostNoeatCount = 0;
+      if (temp) {
+        mostNoeatCount = temp.noeatCount;
+      }
+
+      // // Less Noeat
+      const fiveCoeatMenu = await userDB.getFiveCoeatMenuIdByGroupId(client, groupId);
+      const fiveCoeatMenuId = fiveCoeatMenu.map((o) => o.menuId);
+
+      const fiveNoeatMenu = await userDB.getNoeatCountOfFiveMenu(client, groupId, fiveCoeatMenuId);
+      const lessNoeatList = fiveNoeatMenu.sort(function (a, b) {
+        return Number(a.noeatCnt) - Number(b.noeatCnt);
       });
+      const lessNoeat = lessNoeatList[0];
+      const lessCoeatCount = fiveCoeatMenu.filter((o) => o.menuId == lessNoeat.id)[0].coeatCnt;
+      const lessNoeatCount = lessNoeat.noeatCnt;
+      const { menuName: lessNoeatMenuName, menuImg: lessNoeatMenuImg } = await userDB.getLessNoeatDataByMenuId(client, lessNoeat.id);
+
+      const groupResult = {
+        mostCoeatMenuName: mostCoeatMenuName,
+        mostCoeatMenuImg: mostCoeatMenuImg,
+        mostCoeatCount: Number(mostCoeatCount),
+        mostNoeatCount: Number(mostNoeatCount),
+        lessNoeatMenuName: lessNoeatMenuName,
+        lessNoeatMenuImg: lessNoeatMenuImg,
+        lessCoeatCount: Number(lessCoeatCount),
+        lessNoeatCount: Number(lessNoeatCount),
+        resultList: resultList,
+        peopleCount: Number(peopleCount),
+      };
+
+      res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.READ_RESULT_SUCCESS, groupResult));
+    } catch {
+      const groupResult = {
+        resultList: resultList,
+        peopleCount: Number(peopleCount),
+      };
+      res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.READ_EMPTY_RESULT_SUCCESS, groupResult));
     }
-
-    const { count: peopleCount } = (await userDB.getPeopleCount(client, groupId))[0];
-
-    const groupResult = {
-      mostCoeatMenuName: mostCoeatMenuName,
-      mostCoeatMenuImg: mostCoeatMenuImg,
-      mostCoeatCount: Number(mostCoeatCount),
-      mostNoeatCount: Number(mostNoeatCount),
-      lessNoeatMenuName: lessNoeatMenuName,
-      lessNoeatMenuImg: lessNoeatMenuImg,
-      lessCoeatCount: Number(lessCoeatCount),
-      lessNoeatCount: Number(lessNoeatCount),
-      resultList: resultList,
-      peopleCount: Number(peopleCount),
-    };
-
-    res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.READ_RESULT_SUCCESS, groupResult));
   } catch (error) {
     functions.logger.error(`[ERROR] [${req.method.toUpperCase()}] ${req.originalUrl}`, `[CONTENT] ${error}`);
     console.log(error);

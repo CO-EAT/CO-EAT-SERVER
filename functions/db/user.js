@@ -72,7 +72,7 @@ const getMostCoeatDataByGroupId = async (client, groupId) => {
     [groupId],
   );
 
-  return convertSnakeToCamel.keysToCamel(rows);
+  return convertSnakeToCamel.keysToCamel(rows[0]);
 };
 
 const getNoeatCountByMostCoeatId = async (client, groupId, coeatId) => {
@@ -86,13 +86,13 @@ const getNoeatCountByMostCoeatId = async (client, groupId, coeatId) => {
     [groupId, coeatId],
   );
 
-  return convertSnakeToCamel.keysToCamel(rows);
+  return convertSnakeToCamel.keysToCamel(rows[0]);
 };
 
 const getFiveCoeatMenuIdByGroupId = async (client, groupId) => {
   const { rows } = await client.query(
     `
-    SELECT menu_id, COUNT(*) cnt
+    SELECT menu_id, COUNT(*) coeat_cnt
     FROM like_menu
     WHERE group_id = $1
     GROUP BY menu_id
@@ -104,16 +104,21 @@ const getFiveCoeatMenuIdByGroupId = async (client, groupId) => {
   return convertSnakeToCamel.keysToCamel(rows);
 };
 
-const getLessNoeatIdWithinFiveMenu = async (client, groupId, menuId) => {
+const getNoeatCountOfFiveMenu = async (client, groupId, menuIdList) => {
   const { rows } = await client.query(
     `
-    SELECT COUNT(*) cnt
+    SELECT m.id, u.noeat_cnt
+    FROM menu m
+    LEFT OUTER JOIN
+    (SELECT menu_id, COUNT(*) noeat_cnt
     FROM unlike_menu
     WHERE group_id = $1
-    and menu_id = $2
-    GROUP BY menu_id;
-  `,
-    [groupId, menuId],
+    and menu_id in (${menuIdList})
+    GROUP BY menu_id) u
+    ON m.id=u.menu_id
+    WHERE m.id in (${menuIdList})
+    `,
+    [groupId],
   );
   return convertSnakeToCamel.keysToCamel(rows);
 };
@@ -127,7 +132,7 @@ const getLessNoeatDataByMenuId = async (client, menuId) => {
   `,
     [menuId],
   );
-  return convertSnakeToCamel.keysToCamel(rows);
+  return convertSnakeToCamel.keysToCamel(rows[0]);
 };
 
 const getUsersByGroupId = async (client, groupId) => {
@@ -143,28 +148,30 @@ const getUsersByGroupId = async (client, groupId) => {
   return convertSnakeToCamel.keysToCamel(rows);
 };
 
-const getCoeatList = async (client, userId) => {
+const getCoeatList = async (client, userIdList, groupId) => {
   const { rows } = await client.query(
     `
-    SELECT m.menu_name
+    SELECT c.user_id, m.menu_name
     FROM "like_menu" c JOIN "menu" m
     ON c.menu_id = m.id
-    WHERE c.user_id = $1
+    WHERE c.user_id in (${userIdList})
+    AND c.group_id = $1
     `,
-    [userId],
+    [groupId],
   );
   return convertSnakeToCamel.keysToCamel(rows);
 };
 
-const getNoeatList = async (client, userId) => {
+const getNoeatList = async (client, userIdList, groupId) => {
   const { rows } = await client.query(
     `
-    SELECT m.menu_name
+    SELECT n.user_id, m.menu_name
     FROM "unlike_menu" n JOIN "menu" m
     ON n.menu_id = m.id
-    WHERE n.user_id = $1
+    WHERE n.user_id in (${userIdList})
+    AND n.group_id = $1
     `,
-    [userId],
+    [groupId],
   );
   return convertSnakeToCamel.keysToCamel(rows);
 };
@@ -179,7 +186,7 @@ const getPeopleCount = async (client, groupId) => {
     `,
     [groupId],
   );
-  return convertSnakeToCamel.keysToCamel(rows);
+  return convertSnakeToCamel.keysToCamel(rows[0]);
 };
 
 module.exports = {
@@ -190,7 +197,7 @@ module.exports = {
   getMostCoeatDataByGroupId,
   getNoeatCountByMostCoeatId,
   getFiveCoeatMenuIdByGroupId,
-  getLessNoeatIdWithinFiveMenu,
+  getNoeatCountOfFiveMenu,
   getLessNoeatDataByMenuId,
   getCoeatList,
   getNoeatList,
