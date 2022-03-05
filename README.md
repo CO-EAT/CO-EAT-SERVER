@@ -1,5 +1,5 @@
 # 🍴 Project
-
+![image](https://user-images.githubusercontent.com/63996052/156881737-93034460-0c7f-4d9a-9eb6-ea892e97c7b2.png)
 > 오늘 뭐 먹을래? 아무거나는 이제 그만! Let's COEAT!
 > 모두가 행복한, 메뉴 취합 웹서비스
 
