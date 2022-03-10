@@ -81,11 +81,7 @@ module.exports = async (req, res) => {
 
       res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.READ_RESULT_SUCCESS, groupResult));
     } catch {
-      const groupResult = {
-        resultList: resultList,
-        peopleCount: Number(peopleCount),
-      };
-      res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.READ_EMPTY_RESULT_SUCCESS, groupResult));
+      res.status(statusCode.NO_CONTENT).send(util.success(statusCode.NO_CONTENT, responseMessage.READ_EMPTY_RESULT_SUCCESS));
     }
   } catch (error) {
     functions.logger.error(`[ERROR] [${req.method.toUpperCase()}] ${req.originalUrl}`, `[CONTENT] ${error}`);
