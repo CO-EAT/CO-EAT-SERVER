@@ -4,7 +4,6 @@ const statusCode = require('../../../constants/statusCode');
 const responseMessage = require('../../../constants/responseMessage');
 const db = require('../../../db/db');
 const { groupDB, userDB } = require('../../../db');
-const resizeImage = require('../../../lib/resizeImage');
 
 module.exports = async (req, res) => {
   const { inviteCode } = req.params;
@@ -69,11 +68,11 @@ module.exports = async (req, res) => {
 
       const groupResult = {
         mostCoeatMenuName: mostCoeatMenuName,
-        mostCoeatMenuImg: resizeImage(mostCoeatMenuImg),
+        mostCoeatMenuImg: mostCoeatMenuImg,
         mostCoeatCount: Number(mostCoeatCount),
         mostNoeatCount: Number(mostNoeatCount),
         lessNoeatMenuName: lessNoeatMenuName,
-        lessNoeatMenuImg: resizeImage(lessNoeatMenuImg),
+        lessNoeatMenuImg: lessNoeatMenuImg,
         lessCoeatCount: Number(lessCoeatCount),
         lessNoeatCount: Number(lessNoeatCount),
         resultList: resultList,
@@ -82,11 +81,7 @@ module.exports = async (req, res) => {
 
       res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.READ_RESULT_SUCCESS, groupResult));
     } catch {
-      const groupResult = {
-        resultList: resultList,
-        peopleCount: Number(peopleCount),
-      };
-      res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.READ_EMPTY_RESULT_SUCCESS, groupResult));
+      res.status(statusCode.NO_CONTENT).send(util.success(statusCode.NO_CONTENT, responseMessage.READ_EMPTY_RESULT_SUCCESS));
     }
   } catch (error) {
     functions.logger.error(`[ERROR] [${req.method.toUpperCase()}] ${req.originalUrl}`, `[CONTENT] ${error}`);
