@@ -14,6 +14,7 @@ module.exports = {
   ADD_GROUP_SUCCESS: '그룹 생성하기 성공',
   READ_GROUP_SUCCESS: '그룹 정보 조회하기 성공',
   NOT_FOUND_GROUP: '해당하는 그룹을 찾지 못했습니다.',
+  NO_USER_GROUP: '그룹에 유저가 없습니다.',
 
   //메뉴
   READ_ALL_MENU_SUCCESS: '메뉴 조회하기 성공',

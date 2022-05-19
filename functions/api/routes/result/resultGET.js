@@ -24,9 +24,15 @@ module.exports = async (req, res) => {
     // Result List
     const usersList = await userDB.getUsersByGroupId(client, groupId);
     const userIdList = usersList.map((o) => o.id);
-    const coeatList = await userDB.getCoeatList(client, userIdList, groupId);
-    const noeatList = await userDB.getNoeatList(client, userIdList, groupId);
 
+    let coeatList;
+    let noeatList;
+    try {
+      coeatList = await userDB.getCoeatList(client, userIdList, groupId);
+      noeatList = await userDB.getNoeatList(client, userIdList, groupId);
+    } catch {
+      return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NO_USER_GROUP));
+    }
     const resultList = usersList.map((item) => {
       item.likedMenu = [];
       item.unlikedMenu = [];
@@ -79,9 +85,9 @@ module.exports = async (req, res) => {
         peopleCount: Number(peopleCount),
       };
 
-      res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.READ_RESULT_SUCCESS, groupResult));
+      return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.READ_RESULT_SUCCESS, groupResult));
     } catch {
-      res.status(statusCode.NO_CONTENT).send(util.success(statusCode.NO_CONTENT, responseMessage.READ_EMPTY_RESULT_SUCCESS));
+      return res.status(statusCode.NO_CONTENT).send(util.success(statusCode.NO_CONTENT, responseMessage.READ_EMPTY_RESULT_SUCCESS));
     }
   } catch (error) {
     functions.logger.error(`[ERROR] [${req.method.toUpperCase()}] ${req.originalUrl}`, `[CONTENT] ${error}`);
