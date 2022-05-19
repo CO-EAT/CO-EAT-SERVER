@@ -48,7 +48,6 @@ module.exports = async (req, res) => {
       item.unlikedMenu.push(o.menuName);
       return o;
     });
-    const { count: peopleCount } = await userDB.getPeopleCount(client, groupId);
 
     try {
       // Most Coeat
@@ -72,6 +71,10 @@ module.exports = async (req, res) => {
       const lessNoeatCount = lessNoeat.noeatCnt;
       const { menuName: lessNoeatMenuName, menuImg: lessNoeatMenuImg } = await userDB.getLessNoeatDataByMenuId(client, lessNoeat.id);
 
+      const filteredList = resultList.filter((o) => {
+        if (o.likedMenu.length > 0) return true;
+      });
+
       const groupResult = {
         mostCoeatMenuName: mostCoeatMenuName,
         mostCoeatMenuImg: mostCoeatMenuImg,
@@ -81,8 +84,8 @@ module.exports = async (req, res) => {
         lessNoeatMenuImg: lessNoeatMenuImg,
         lessCoeatCount: Number(lessCoeatCount),
         lessNoeatCount: Number(lessNoeatCount),
-        resultList: resultList,
-        peopleCount: Number(peopleCount),
+        resultList: filteredList,
+        peopleCount: filteredList.length,
       };
 
       return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.READ_RESULT_SUCCESS, groupResult));
