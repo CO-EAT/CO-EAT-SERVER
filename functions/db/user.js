@@ -43,6 +43,26 @@ const addUnlikeMenu = async (client, groupId, userId, unlikeMenu) => {
   return convertSnakeToCamel.keysToCamel(rows);
 };
 
+const deleteLikeMenu = async (client, userId) => {
+  await client.query(
+    `
+    DELETE FROM "like_menu"
+    WHERE user_id = $1;
+    `,
+    [userId],
+  );
+};
+
+const deleteunlikeMenu = async (client, userId) => {
+  await client.query(
+    `
+    DELETE FROM "like_menu"
+    WHERE user_id = $1;
+    `,
+    [userId],
+  );
+};
+
 const findUserByNickNameandGroupId = async (client, groupId, nickname) => {
   const { rows } = await client.query(
     `
@@ -203,4 +223,6 @@ module.exports = {
   getNoeatList,
   getPeopleCount,
   getUsersByGroupId,
+  deleteLikeMenu,
+  deleteunlikeMenu,
 };

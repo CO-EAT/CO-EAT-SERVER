@@ -23,6 +23,10 @@ module.exports = async (req, res) => {
     const findUser = await userDB.findUserByNickNameandGroupId(client, groupId, nickname);
     const userId = findUser[0].id;
 
+    // 중복 투표 시 삭제
+    await userDB.deleteLikeMenu(client, userId);
+    await userDB.deleteunlikeMenu(client, userId);
+
     // 하나씩 저장
     for (let i = 0; i < likedMenu.length; i++) {
       await userDB.addLikeMenu(client, groupId, userId, likedMenu[i]);
