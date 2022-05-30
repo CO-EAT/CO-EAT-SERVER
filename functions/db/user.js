@@ -56,7 +56,7 @@ const deleteLikeMenu = async (client, userId) => {
 const deleteunlikeMenu = async (client, userId) => {
   await client.query(
     `
-    DELETE FROM "like_menu"
+    DELETE FROM "unlike_menu"
     WHERE user_id = $1;
     `,
     [userId],
