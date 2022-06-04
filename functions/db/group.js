@@ -1,3 +1,4 @@
+const dayjs = require('dayjs');
 const _ = require('lodash');
 const convertSnakeToCamel = require('../lib/convertSnakeToCamel');
 
@@ -24,15 +25,16 @@ const checkGroupFinished = async (client, groupId) => {
 };
 
 const addGroup = async (client, hostName, inviteCode) => {
+  const now = dayjs().add(9, 'hour');
   const { rows } = await client.query(
     `
     INSERT INTO "group"
-    (host_name, invite_code)
+    (host_name, invite_code, created_at, updated_at)
     VALUES
-    ($1, $2)
+    ($1, $2, $3, $3)
     RETURNING *
     `,
-    [hostName, inviteCode],
+    [hostName, inviteCode, now],
   );
   return convertSnakeToCamel.keysToCamel(rows);
 };
@@ -49,14 +51,15 @@ const checkHost = async (client, groupId, nickname) => {
 };
 
 const completeGroup = async (client, groupId, nickname) => {
+  const now = dayjs().add(9, 'hour');
   const { rows } = await client.query(
     `
     UPDATE "group" g
-    SET is_deleted = TRUE, updated_at = now()
+    SET is_deleted = TRUE, updated_at = $3
     WHERE id = $1 and host_name = $2
     RETURNING is_deleted
     `,
-    [groupId, nickname],
+    [groupId, nickname, now],
   );
   return convertSnakeToCamel.keysToCamel(rows[0]);
 };
