@@ -22,8 +22,9 @@ module.exports = async (req, res) => {
 
     const findUser = await userDB.findUserByNickNameandGroupId(client, groupId, nickname);
 
+    console.log(findUser);
     // 해당 그룹에 참여한 사용자가 아닐 때
-    if (!findUser) {
+    if (!findUser.length) {
       return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NOT_FOUND_USER));
     }
 
