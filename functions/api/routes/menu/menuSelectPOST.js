@@ -21,7 +21,18 @@ module.exports = async (req, res) => {
     const groupId = findGroup[0].id;
 
     const findUser = await userDB.findUserByNickNameandGroupId(client, groupId, nickname);
+
+    console.log(findUser);
+    // 해당 그룹에 참여한 사용자가 아닐 때
+    if (!findUser.length) {
+      return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NOT_FOUND_USER));
+    }
+
     const userId = findUser[0].id;
+
+    // 중복 투표 시 삭제
+    await userDB.deleteLikeMenu(client, userId);
+    await userDB.deleteunlikeMenu(client, userId);
 
     // 하나씩 저장
     for (let i = 0; i < likedMenu.length; i++) {

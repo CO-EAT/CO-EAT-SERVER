@@ -1,46 +1,70 @@
+const dayjs = require('dayjs');
 const _ = require('lodash');
 const convertSnakeToCamel = require('../lib/convertSnakeToCamel');
 
 const addUser = async (client, nickname, groupId) => {
+  const now = dayjs().add(9, 'hour');
   const { rows } = await client.query(
     `
     INSERT INTO "user"
-    (group_id, nickname)
+    (group_id, nickname, created_at, updated_at)
     VALUES
-    ($1, $2)
+    ($1, $2, $3, $3)
     RETURNING *
     `,
-    [groupId, nickname],
+    [groupId, nickname, now],
   );
   return convertSnakeToCamel.keysToCamel(rows);
 };
 
 const addLikeMenu = async (client, groupId, userId, likeMenu) => {
+  const now = dayjs().add(9, 'hour');
   const { rows } = await client.query(
     `
     INSERT INTO "like_menu"
-    (group_id, user_id, menu_id)
+    (group_id, user_id, menu_id, created_at, updated_at)
     VALUES
-    ($1,$2,$3)
+    ($1,$2,$3,$4,$4)
     RETURNING *
     `,
-    [groupId, userId, likeMenu],
+    [groupId, userId, likeMenu, now],
   );
   return convertSnakeToCamel.keysToCamel(rows);
 };
 
 const addUnlikeMenu = async (client, groupId, userId, unlikeMenu) => {
+  const now = dayjs().add(9, 'hour');
   const { rows } = await client.query(
     `
     INSERT INTO "unlike_menu"
-    (group_id, user_id, menu_id)
+    (group_id, user_id, menu_id, created_at, updated_at)
     VALUES
-    ($1,$2,$3)
+    ($1,$2,$3,$4,$4)
     RETURNING *
     `,
-    [groupId, userId, unlikeMenu],
+    [groupId, userId, unlikeMenu, now],
   );
   return convertSnakeToCamel.keysToCamel(rows);
+};
+
+const deleteLikeMenu = async (client, userId) => {
+  await client.query(
+    `
+    DELETE FROM "like_menu"
+    WHERE user_id = $1;
+    `,
+    [userId],
+  );
+};
+
+const deleteunlikeMenu = async (client, userId) => {
+  await client.query(
+    `
+    DELETE FROM "unlike_menu"
+    WHERE user_id = $1;
+    `,
+    [userId],
+  );
 };
 
 const findUserByNickNameandGroupId = async (client, groupId, nickname) => {
@@ -203,4 +227,6 @@ module.exports = {
   getNoeatList,
   getPeopleCount,
   getUsersByGroupId,
+  deleteLikeMenu,
+  deleteunlikeMenu,
 };
